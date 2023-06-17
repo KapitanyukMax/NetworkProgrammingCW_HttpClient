@@ -1,0 +1,57 @@
+﻿<Window x:Class="NetworkProgrammingCW_HttpClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkProgrammingCW_HttpClient"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
+        Title="Download image" Height="450" Width="800">
+    <DockPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin" Value="6"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0">Height:</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Height}"/>
+
+            <Label Grid.Row="1" Grid.Column="0">Width:</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Width}"/>
+
+            <Label Grid.Row="2" Grid.Column="0">Category:</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Category}"/>
+
+            <Label Grid.Row="3" Grid.Column="0">Download path:</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FileDestination}"/>
+            <Button Grid.Row="3" Grid.Column="2" Margin="6" Padding="5,0"  FontSize="12"
+                    Command="{Binding ChooseFileDestinationCommand}">Choose file destination</Button>
+        </Grid>
+
+        <Button DockPanel.Dock="Bottom" Padding="10" Background="DarkCyan"
+                Foreground="White" Command="{Binding DownloadFileCommand}">Download</Button>
+        <ProgressBar DockPanel.Dock="Bottom" Height="6"
+                     Margin="6" Value="{Binding DownloadPercentage}"/>
+        <TextBlock DockPanel.Dock="Top" TextAlignment="Center" FontSize="28">Download History</TextBlock>
+        <ListBox Margin="6" ItemsSource="{Binding HistoryList}"/>
+    </DockPanel>
+</Window>
