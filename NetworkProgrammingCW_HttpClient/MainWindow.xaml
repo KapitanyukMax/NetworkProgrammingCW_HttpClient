@@ -19,7 +19,7 @@
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                 </Style>
             </Grid.Resources>
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -47,8 +47,14 @@
                     Command="{Binding ChooseFileDestinationCommand}">Choose file destination</Button>
         </Grid>
 
-        <Button DockPanel.Dock="Bottom" Padding="10" Background="DarkCyan"
-                Foreground="White" Command="{Binding DownloadFileCommand}">Download</Button>
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+            <Button DockPanel.Dock="Left" Width="150" Margin="30,5" Padding="10"
+                    Background="DarkRed" Foreground="White"
+                    Command="{Binding CancelDownloadingCommand}">Cancel</Button>
+            <Button DockPanel.Dock="Right" Width="150" Margin="30,5" Padding="10"
+                    Background="DarkCyan" Foreground="White"
+                    Command="{Binding DownloadFileCommand}">Download</Button>
+        </DockPanel>
         <ProgressBar DockPanel.Dock="Bottom" Height="6"
                      Margin="6" Value="{Binding DownloadPercentage}"/>
         <TextBlock DockPanel.Dock="Top" TextAlignment="Center" FontSize="28">Download History</TextBlock>

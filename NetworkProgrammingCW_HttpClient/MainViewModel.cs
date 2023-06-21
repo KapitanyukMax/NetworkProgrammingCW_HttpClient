@@ -32,9 +32,13 @@ namespace NetworkProgrammingCW_HttpClient
 
         private RelayCommand? downLoadFileCommand;
 
-        public ICommand DownloadFileCommand => downLoadFileCommand ??
-            (downLoadFileCommand = new RelayCommand(o => DownloadFileAsync(),
-                                                    o => !client.IsBusy));
+        public ICommand DownloadFileCommand => downLoadFileCommand ??=
+            new RelayCommand(o => DownloadFileAsync(), o => !client.IsBusy);
+
+        private RelayCommand? cancelDownloadingCommand;
+
+        public ICommand CancelDownloadingCommand => cancelDownloadingCommand ??=
+            new RelayCommand(o => CancelDownloading(), o => client.IsBusy);
 
         private RelayCommand? chooseFileDestinationCommand;
 
@@ -90,9 +94,19 @@ namespace NetworkProgrammingCW_HttpClient
                 return;
             }
 
-            await client.DownloadFileTaskAsync(Url, FileDestination);
-            AddHistoryItem();
-            ShowImage();
+            try
+            {
+                await client.DownloadFileTaskAsync(Url, FileDestination);
+                AddHistoryItem();
+                ShowImage();
+            }
+            catch (WebException) { }
+        }
+
+        private void CancelDownloading()
+        {
+            if (client.IsBusy)
+                client.CancelAsync();
         }
     }
 }
